@@ -1,0 +1,91 @@
+<!-- activity_user_profile.xml -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Header -->
+        <RelativeLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <!-- Back icon button -->
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="Back"
+                android:src="@drawable/baseline_arrow_back_24"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <!-- Profile text -->
+            <TextView
+                android:id="@+id/profileText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="17dp"
+                android:layout_toEndOf="@id/backButton"
+                android:text="Profile"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+        <!-- User profile picture -->
+        <ImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@id/headerLayout"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/circle_background"
+            android:src="@drawable/myself"
+            android:contentDescription="User Profile Picture" />
+
+        <!-- Username -->
+        <TextView
+            android:id="@+id/usernameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileImageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="CLAUDE DE GUZMAN"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Edit Profile button -->
+        <Button
+            android:id="@+id/editProfileButton"
+            android:layout_width="80dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/usernameTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/transparent_button_background"
+            android:text="EDIT PROFILE"
+            android:textColor="@color/black"
+            android:textSize="10dp"
+            tools:ignore="TextSizeCheck" />
+
+        <!-- Thin line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/editProfileButton"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="25dp" />
+
+    </RelativeLayout>
+</ScrollView>

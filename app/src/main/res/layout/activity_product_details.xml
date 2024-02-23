@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Enhanced Header -->
+        <RelativeLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#FFFFFF"
+            android:padding="16dp">
+
+            <!-- Back Button -->
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="Back"
+                android:onClick="onBackPressed"
+                android:src="@drawable/baseline_arrow_back_24"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <!-- Product Title TextView -->
+            <TextView
+                android:id="@+id/productTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toStartOf="@id/cartButton"
+                android:layout_toEndOf="@id/backButton"
+                android:text="Product Name"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <!-- Search Button -->
+            <ImageButton
+                android:id="@+id/searchButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@id/cartButton"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="Search"
+                android:onClick="openSearch"
+            android:src="@drawable/baseline_search_24"
+            tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                android:id="@+id/cartButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="Add to cart"
+                android:onClick="openCart"
+            android:src="@drawable/baseline_shopping_cart_24"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        </RelativeLayout>
+
+        <!-- Product image -->
+        <ImageView
+            android:id="@+id/productImageView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@id/headerLayout"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/productNameBelowImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productImageView"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:text="Product Name"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
+
+        <!-- Product price -->
+        <TextView
+            android:id="@+id/productPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productNameBelowImage"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:text="Product Price"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <!-- Sizes GridLayout -->
+        <GridLayout
+            android:id="@+id/sizesGridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:rowCount="2"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false"
+            android:useDefaultMargins="true"
+            android:layout_below="@id/productPriceTextView"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Product description -->
+        <TextView
+            android:id="@+id/productDescriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sizesGridLayout"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:text="Product Description"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productDescriptionTextView"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!-- Add to Cart Button -->
+            <Button
+                android:id="@+id/addToCartButton"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/transparent_button_background"
+                android:foreground="@drawable/transparent_button_foreground"
+                android:text="Add to Cart"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:onClick="addToCart" />
+
+            <!-- Cart Items TextView -->
+            <TextView
+                android:id="@+id/cartItemsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/buttonsLayout"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text=""
+                android:textSize="16sp" />
+
+            <RelativeLayout
+                android:id="@+id/relatedProductsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/buttonsLayout"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="30dp"
+                android:padding="16dp"
+                android:background="@drawable/rounded_background">
+
+                <TextView
+                    android:id="@+id/relatedProductsTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You might also like"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+
+                    android:layout_marginBottom="16dp"/>
+                <!-- Inside the "You might also like" section -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/otherProductsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relatedProductsTitleTextView"
+                    android:layout_marginTop="16dp"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
