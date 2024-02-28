@@ -76,17 +76,7 @@ class CartActivity : AppCompatActivity() {
             putExtra("cartItems", checkedItems.toTypedArray())
         }
         startActivity(intent)
-
-        // Remove the checked items from the cart
-        ShoppingCart.removeUncheckedItems()
-
-        // Refresh the cart view
-        cartAdapter.submitList(ShoppingCart.getItems())
-
-        // Update the total amount in the UI
-        updateTotalAmount()
     }
-
 
 
 

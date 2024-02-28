@@ -1,4 +1,5 @@
 package com.sneakersphere.sneakersphereapp
+
 object ShoppingCart {
     private val items: MutableList<CartItem> = mutableListOf()
 
@@ -28,5 +29,9 @@ object ShoppingCart {
             totalPrice += item.price
         }
         return totalPrice
+    }
+
+    fun removeItems(itemsToRemove: List<CartItem>) {
+        items.removeAll(itemsToRemove)
     }
 }

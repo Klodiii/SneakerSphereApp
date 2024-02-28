@@ -46,7 +46,7 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
             productImageView.setImageResource(item.imageResource)
             selectCheckBox.isChecked = item.isSelected
 
-            selectCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            selectCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
                 item.isSelected = isChecked
                 updateTotalAmount()
             }
@@ -54,7 +54,9 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
             removeItemButton.setOnClickListener {
                 showRemoveItemConfirmationDialog(item)
             }
+
         }
+
 
         private fun showRemoveItemConfirmationDialog(item: CartItem) {
             val dialogView = LayoutInflater.from(itemView.context).inflate(R.layout.remove_item, null)
@@ -84,5 +86,6 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
         private fun updateTotalAmount() {
             (itemView.context as? CartActivity)?.updateTotalAmount()
         }
+
     }
 }

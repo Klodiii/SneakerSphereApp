@@ -47,7 +47,7 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun updateCheckout() {
-        val cartItems = ShoppingCart.getItems()
+        val cartItems = ShoppingCart.getItems().filter { it.isSelected }
         cartAdapter.submitList(cartItems.toMutableList())
 
         val totalItems = cartItems.size
@@ -56,6 +56,7 @@ class CheckoutActivity : AppCompatActivity() {
         val totalPrice = calculateTotalPrice(cartItems)
         totalPriceTextView.text = "TOTAL: PHP$totalPrice"
     }
+
 
     private fun calculateTotalPrice(cartItems: List<CartItem>): Double {
         var totalPrice = 0.0
@@ -68,7 +69,7 @@ class CheckoutActivity : AppCompatActivity() {
     private fun confirmCheckout() {
         val alertDialog = AlertDialog.Builder(this)
             .setTitle("Confirm Checkout")
-            .setMessage("Are you sure you want to checkout?")
+            .setMessage("Check out now?")
             .setPositiveButton("Yes") { _, _ ->
                 ShoppingCart.clearCart()
                 updateCheckout()
