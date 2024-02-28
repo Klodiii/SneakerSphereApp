@@ -37,7 +37,7 @@
                 android:text="Profile"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
@@ -68,8 +68,8 @@
         <!-- Edit Profile button -->
         <Button
             android:id="@+id/editProfileButton"
-            android:layout_width="80dp"
-            android:layout_height="48dp"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
             android:layout_below="@id/usernameTextView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
@@ -77,15 +77,152 @@
             android:text="EDIT PROFILE"
             android:textColor="@color/black"
             android:textSize="10dp"
-            tools:ignore="TextSizeCheck" />
+            tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
 
         <!-- Thin line -->
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:layout_below="@id/editProfileButton"
             android:background="@android:color/darker_gray"
             android:layout_marginTop="25dp" />
 
+        <!-- Options -->
+        <LinearLayout
+            android:id="@+id/iconOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editProfileButton"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="40dp">
+
+            <!-- Orders -->
+
+            <!-- Horizontal Line -->
+            <ImageView
+                android:id="@+id/ordersIcon"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:contentDescription="Orders"
+                android:src="@drawable/baseline_add_shopping_cart_24" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray" />
+
+            <!-- Favorites -->
+            <ImageView
+                android:id="@+id/favoritesIcon"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_favorite_border_24"
+                android:contentDescription="Favorites"
+                android:layout_marginStart="10dp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray" />
+
+            <!-- Settings -->
+            <ImageView
+                android:id="@+id/settingsIcon"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_settings_24"
+                android:contentDescription="Settings"
+                android:layout_marginStart="10dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/iconOptions"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="15dp" />
+
+        <!-- Products -->
+        <LinearLayout
+            android:id="@+id/productsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iconOptions"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:padding="16dp">
+
+            <!-- Product grid -->
+            <GridLayout
+                android:id="@+id/productGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:rowCount="1"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false"
+                android:useDefaultMargins="true">
+
+                <!-- Product 1 -->
+                <ImageView
+                    android:id="@+id/product1ImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:src="@drawable/shoe1"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Product 1" />
+
+                <!-- Product 2 -->
+
+                <!-- Product 3 -->
+                <ImageView
+                    android:id="@+id/product2ImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Product 2"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/shoe2" />
+
+                <ImageView
+                    android:id="@+id/product3ImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:src="@drawable/shoe3"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Product 3" />
+
+            </GridLayout>
+
+            <!-- Go back to shop text -->
+            <TextView
+                android:id="@+id/goBackToShopText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:minHeight="48dp"
+                android:onClick="goBackToShop"
+                android:text="Go back to shop?"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
     </RelativeLayout>
+
 </ScrollView>

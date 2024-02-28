@@ -48,7 +48,7 @@ class CheckoutActivity : AppCompatActivity() {
 
     private fun updateCheckout() {
         val cartItems = ShoppingCart.getItems()
-        cartAdapter.submitList(cartItems)
+        cartAdapter.submitList(cartItems.toMutableList())
 
         val totalItems = cartItems.size
         totalItemsTextView.text = "Total Items: $totalItems"

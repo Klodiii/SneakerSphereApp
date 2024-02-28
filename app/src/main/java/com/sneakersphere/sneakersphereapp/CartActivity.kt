@@ -50,7 +50,7 @@ class CartActivity : AppCompatActivity() {
     }
 
     fun updateTotalAmount() {
-        val totalPrice = ShoppingCart.getTotalPrice()
+        val totalPrice = ShoppingCart.getItems().filter { it.isSelected }.sumByDouble { it.price }
         totalAmountTextView.text = String.format("PHP%.2f", totalPrice)
     }
 
@@ -66,11 +66,28 @@ class CartActivity : AppCompatActivity() {
         // Remove the currency symbol and commas, then parse the string to a double
         return price.replace("PHP", "").replace(",", "").toDoubleOrNull() ?: 0.0
     }
+
     fun openCheckout(view: View) {
+        // Filter the checked items
+        val checkedItems = ShoppingCart.getItems().filter { it.isSelected }
+
+        // Create intent with only the checked items
         val intent = Intent(this, CheckoutActivity::class.java).apply {
-            putExtra("cartItems", ShoppingCart.getItems().toTypedArray())
+            putExtra("cartItems", checkedItems.toTypedArray())
         }
         startActivity(intent)
+
+        // Remove the checked items from the cart
+        ShoppingCart.removeUncheckedItems()
+
+        // Refresh the cart view
+        cartAdapter.submitList(ShoppingCart.getItems())
+
+        // Update the total amount in the UI
+        updateTotalAmount()
     }
+
+
+
 
 }

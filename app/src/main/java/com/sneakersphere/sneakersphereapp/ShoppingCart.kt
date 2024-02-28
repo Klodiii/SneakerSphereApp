@@ -1,5 +1,4 @@
 package com.sneakersphere.sneakersphereapp
-
 object ShoppingCart {
     private val items: MutableList<CartItem> = mutableListOf()
 
@@ -18,6 +17,11 @@ object ShoppingCart {
     fun getItems(): List<CartItem> {
         return items
     }
+
+    fun removeUncheckedItems() {
+        items.removeAll { !it.isSelected }
+    }
+
     fun getTotalPrice(): Double {
         var totalPrice = 0.0
         for (item in items) {
@@ -26,4 +30,3 @@ object ShoppingCart {
         return totalPrice
     }
 }
-

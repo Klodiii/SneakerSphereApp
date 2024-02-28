@@ -124,7 +124,7 @@ class Dashboard : AppCompatActivity(), ProductAdapter.OnProductClickListener {
                 }
                 R.id.nav_orders -> {
                     // Handle Orders click
-                    val intent = Intent(this, OrdersActivity::class.java)
+                    val intent = Intent(this, CartActivity::class.java)
                     startActivity(intent)
                     true
                 }
@@ -143,7 +143,6 @@ class Dashboard : AppCompatActivity(), ProductAdapter.OnProductClickListener {
                 else -> false
             }
         }
-
 
 
         val cartButton: ImageButton = findViewById(R.id.cartButton)
