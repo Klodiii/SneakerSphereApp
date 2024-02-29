@@ -21,9 +21,7 @@
         <activity
             android:name=".FavoritesActivity"
             android:exported="false" />
-        <activity
-            android:name=".OrdersActivity"
-            android:exported="false" />
+
         <activity
             android:name=".UserProfileActivity"
             android:exported="false" />
