@@ -1,6 +1,7 @@
 package com.sneakersphere.sneakersphereapp
 
 import android.content.Intent
+import xxandroid.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -16,6 +17,9 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
 
 class Dashboard : AppCompatActivity(), ProductAdapter.OnProductClickListener {
 
@@ -43,6 +47,13 @@ class Dashboard : AppCompatActivity(), ProductAdapter.OnProductClickListener {
         val compositePageTransformer = CompositePageTransformer()
         compositePageTransformer.addTransformer(MarginPageTransformer((40 * resources.displayMetrics.density).toInt()))
         viewPager2.setPageTransformer(compositePageTransformer)
+
+        val ProductAPI= RetrofitHelper.getInstance().create(ProductAPI::class.java)
+
+        GlobalScope.launch {
+            val result = ProductAPI.getProduct()
+            if (result)
+        }
 
         val delayMillis: Long = 3000
         val initialDelayMillis: Long = 0
