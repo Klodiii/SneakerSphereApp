@@ -3,19 +3,14 @@ package com.sneakersphere.sneakersphereapp
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClient {
-    private const val BASE_URL = "https://jsonplaceholder.typicode.com/"
+object ApiClient {
+    private const val BASE_URL = "https://sneakersphere.online/api/"
 
-    val retrofit: Retrofit by lazy {
+    val apiService: ProductAPI by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
-}
-
-object ApiClient {
-    val apiService: ApiService by lazy {
-        RetrofitClient.retrofit.create(ApiService::class.java)
+            .create(ProductAPI::class.java)
     }
 }

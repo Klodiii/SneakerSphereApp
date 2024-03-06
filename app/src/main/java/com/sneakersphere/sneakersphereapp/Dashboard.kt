@@ -1,7 +1,6 @@
 package com.sneakersphere.sneakersphereapp
 
 import android.content.Intent
-import xxandroid.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -19,12 +18,17 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
+import retrofit2.Response
+import retrofit2.Call
+import retrofit2.Callback
+import com.sneakersphere.sneakersphereapp.RetrofitHelper
+import com.sneakersphere.sneakersphereapp.ProductAPI
 
 class Dashboard : AppCompatActivity(), ProductAdapter.OnProductClickListener {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+    private lateinit var productAdapter: ProductAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,43 +52,36 @@ class Dashboard : AppCompatActivity(), ProductAdapter.OnProductClickListener {
         compositePageTransformer.addTransformer(MarginPageTransformer((40 * resources.displayMetrics.density).toInt()))
         viewPager2.setPageTransformer(compositePageTransformer)
 
-        val ProductAPI= RetrofitHelper.getInstance().create(ProductAPI::class.java)
-
+        val productAPI = RetrofitHelper.getInstance().create(ProductAPI::class.java)
         GlobalScope.launch {
-            val result = ProductAPI.getProduct()
-            if (result)
+            val call: Call<List<Product>> = productAPI.getProducts()
+            call.enqueue(object : Callback<List<Product>> {
+                override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+                    if (response.isSuccessful) {
+                        val products = response.body()
+                        if (products != null) {
+                            // Update the productAdapter with the list of products
+                            productAdapter.submitList(products)
+                        } else {
+                            // Handle empty response
+                        }
+                    } else {
+                        // Handle unsuccessful response
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                    // Handle API call failure
+                }
+            })
         }
-
-        val delayMillis: Long = 3000
-        val initialDelayMillis: Long = 0
-        val scrollRunnable = Runnable {
-            val nextItem = (viewPager2.currentItem + 1) % itemList.size
-            viewPager2.setCurrentItem(nextItem, true)
-        }
-
-        val handler = Handler()
-        handler.postDelayed(scrollRunnable, initialDelayMillis)
-
-        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                handler.removeCallbacksAndMessages(null)
-                handler.postDelayed(scrollRunnable, delayMillis)
-            }
-        })
 
         val spanCount = 2
         val layoutManager = GridLayoutManager(this, spanCount)
         productRecyclerView.layoutManager = layoutManager
 
-        val productAdapter = ProductAdapter(generateProductData(), this)
+        productAdapter = ProductAdapter(emptyList(), this)
         productRecyclerView.adapter = productAdapter
-
-        val searchButton: ImageButton = findViewById(R.id.searchButton)
-        searchButton.setOnClickListener {
-            val intent = Intent(this, SearchActivity::class.java)
-            startActivityForResult(intent, SEARCH_REQUEST_CODE)
-        }
 
         // Categories
         val maleCategory = findViewById<LinearLayout>(R.id.maleCategory)
@@ -155,7 +152,6 @@ class Dashboard : AppCompatActivity(), ProductAdapter.OnProductClickListener {
             }
         }
 
-
         val cartButton: ImageButton = findViewById(R.id.cartButton)
         cartButton.setOnClickListener {
             val intent = Intent(this, CartActivity::class.java)
@@ -196,80 +192,12 @@ class Dashboard : AppCompatActivity(), ProductAdapter.OnProductClickListener {
         )
     }
 
-    private fun generateProductData(): List<Product> {
-        val productList = ArrayList<Product>()
-
-        productList.add(Product(
-            "Air Jordan 1 Mid",
-            "PHP8,395",
-            R.drawable.shoe1,
-            "Inspired by the original AJ1, this mid-top edition maintains the iconic look you love while choice colors and crisp leather give it a distinct identity.\n" +
-                    "Shown: White/Black/Gym Red\n" +
-                    "• Style: DQ8426-106\n" +
-                    "Country/Region of Origin: Indonesia"
-        ))
-
-        productList.add(Product(
-            "Jordan Max Aura 5",
-            "PHP5,920",
-            R.drawable.shoe2,
-            "When you need a shoe that's ready 24/7, it's gotta be the Max Aura 5. Inspired by the AJ3, this pair of kicks puts a modern spin on the classic. They're made from durable leather and textiles that sit atop a heel of Nike Air cushioning so you can walk, run, or skate all day and still have fresh-feeling soles.\n" +
-                    "Shown: Black/Bright Mandarin/Sail/Sky J Light Olive\n" +
-                    "• Style: DZ4353-003\n" +
-                    "Country/Region of Origin: Vietnam"
-        ))
-
-        productList.add(Product(
-            "Nike Blazer Mid '77",
-            "PHP5,095",
-            R.drawable.shoe3,
-            "Styled for the '70s. Loved in the '80s. Classic in the '90s. Ready for the future. The Blazer Mid '77 delivers a timeless design that's easy to wear. Its crisp leather upper breaks in beautifully and pairs with bold retro branding and suede accents for a premium feel. Exposed foam on the tongue and a special midsole finish make it look like you've just pulled them from the history books. Go ahead, perfect your outfit.\n" +
-                    "Shown: White/Black\n" +
-                    "Style: DO1344-101\n" +
-                    "Country/Region of Origin: Vietnam"
-        ))
-
-        productList.add(Product(
-            "Tatum 1",
-            "PHP6,895",
-            R.drawable.shoe4,
-            "Your love for the game never fades. That's why the Tatum 1 was created with longevity in mind. Designed to carry you from the first to the fourth (and whatever OT comes up) as efficiently as possible, we stripped it down to the essentials-and made those essentials really, really good. The result is this season's lightest performance basketball shoe, with rubber only where it counts, a stress-tested foam midsole and an uncaged Nike Zoom Air unit for those explosive ups. Whatever stage of ball you're at, the Tatum 1 will keep you playing.\n" +
-                    "Shown: White/Black/Green Strike/Total Orange\n" +
-                    "Style: DZ3330-108\n" +
-                    "Country/Region of Origin: Vietnam"
-        ))
-
-        productList.add(Product(
-            "Nike Air Force 1 '07",
-            "PHP5,495",
-            R.drawable.shoe5w,
-            "The radiance lives on in the Nike Air Force 1 '07, the basketball original that puts a fresh spin on what you know best: durably stitched overlays, clean finishes, and the perfect amount of flash to make you shine.\n" +
-                    "Shown: Black/Black\n" +
-                    "Style: CW2288-001\n" +
-                    "Country/Region of Origin: Vietnam, India"
-        ))
-
-        productList.add(Product(
-            "Blazer Mid '77 Vintage",
-            "PHP4,990",
-            R.drawable.shoe7,
-            "In the '70s, Nike was the new shoe on the block. So new, in fact, we were still breaking into the basketball scene and testing prototypes on the feet of our local team. Of course, the design improved over the years, but the name stuck. The Nike Blazer Mid '77 Vintage-classic since the beginning.\n" +
-                    "Shown: White/Black\n" +
-                    "Style: BQ6806-100\n" +
-                    "Country/Region of Origin: Vietnam, Indonesia, India"
-        ))
-
-        // Add more products similarly
-
-        return productList
-    }
-
     override fun onProductClick(product: Product) {
         // Handle product click, for example, show a product description
         val intent = Intent(this, ProductDetailsActivity::class.java)
         intent.putExtra("productName", product.name)
         intent.putExtra("productPrice", product.price)
-        intent.putExtra("productImage", product.imageResource)
+        intent.putExtra("productImage", product.image)
         intent.putExtra("productDescription", product.description)
         startActivity(intent)
     }
