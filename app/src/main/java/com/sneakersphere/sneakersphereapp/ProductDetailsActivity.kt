@@ -35,12 +35,24 @@ class ProductDetailsActivity : AppCompatActivity() {
     private fun fetchProductDetails(productId: String) {
         val productAPI = ApiClient.apiService
 
-        val call = productAPI.getProduct(productId)
-        call.enqueue(object : Callback<Product> {
-            override fun onResponse(call: Call<Product>, response: Response<Product>) {
+        val call = productAPI.getShoeItem()
+        call.enqueue(object : Callback<ProductResponse> {
+            override fun onResponse(call: Call<ProductResponse>, response: Response<ProductResponse>) {
                 if (response.isSuccessful) {
-                    val product = response.body()
-                    if (product != null) {
+                    val productResponse = response.body()
+                    if (productResponse != null && productResponse.products.isNotEmpty()) {
+                        val shoe = productResponse.products[0]
+                        val product = Product(
+                            id = shoe.id.toString(),
+                            name = shoe.name,
+                            price = shoe.price,
+                            image = shoe.image,
+                            description = shoe.description,
+                            created_at = shoe.created_at,
+                            updated_at = shoe.updated_at,
+                            sizes = emptyList(), // You may need to update this based on your API response
+                            relatedProductIds = emptyList() // You may need to update this based on your API response
+                        )
                         updateUI(product)
                     }
                 } else {
@@ -48,7 +60,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<Product>, t: Throwable) {
+            override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
                 Toast.makeText(this@ProductDetailsActivity, "Failed to fetch product details", Toast.LENGTH_SHORT).show()
             }
         })
@@ -107,6 +119,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             val call = productAPI.getProduct(productId)
             calls.add(call)
         }
+
 
         for (call in calls) {
             call.enqueue(object : Callback<Product> {

@@ -52,16 +52,19 @@ class Dashboard : AppCompatActivity(), ProductAdapter.OnProductClickListener {
         compositePageTransformer.addTransformer(MarginPageTransformer((40 * resources.displayMetrics.density).toInt()))
         viewPager2.setPageTransformer(compositePageTransformer)
 
-        val productAPI = RetrofitHelper.getInstance().create(ProductAPI::class.java)
+        val productAPI = ApiClient.apiService
         GlobalScope.launch {
-            val call: Call<List<Product>> = productAPI.getProducts()
-            call.enqueue(object : Callback<List<Product>> {
-                override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+            val call: Call<ProductResponse> = productAPI.getShoeItem()
+            call.enqueue(object : Callback<ProductResponse> {
+                override fun onResponse(
+                    call: Call<ProductResponse>,
+                    response: Response<ProductResponse>
+                ) {
                     if (response.isSuccessful) {
-                        val products = response.body()
-                        if (products != null) {
-                            // Update the productAdapter with the list of products
-                            productAdapter.submitList(products)
+                        val productResponse = response.body()
+                        if (productResponse != null) {
+                            productAdapter.submitList(productResponse.products)
+
                         } else {
                             // Handle empty response
                         }
@@ -70,13 +73,13 @@ class Dashboard : AppCompatActivity(), ProductAdapter.OnProductClickListener {
                     }
                 }
 
-                override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
                     // Handle API call failure
                 }
             })
         }
 
-        val spanCount = 2
+            val spanCount = 2
         val layoutManager = GridLayoutManager(this, spanCount)
         productRecyclerView.layoutManager = layoutManager
 
@@ -201,6 +204,7 @@ class Dashboard : AppCompatActivity(), ProductAdapter.OnProductClickListener {
         intent.putExtra("productDescription", product.description)
         startActivity(intent)
     }
+
 
     companion object {
         const val SEARCH_REQUEST_CODE = 123

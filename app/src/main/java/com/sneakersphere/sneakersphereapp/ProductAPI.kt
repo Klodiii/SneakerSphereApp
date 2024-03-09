@@ -5,9 +5,10 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ProductAPI {
-    @GET("products/{productId}")
-    fun getProduct(@Path("productId") productId: String): Call<Product>
+    @GET("public/api")
+    fun getShoeItem(): Call<ProductResponse>
 
-    @GET("products")
-    fun getProducts(): Call<List<Product>>
+    @GET("public/api/{id}")
+    fun getProduct(@Path("id") productId: String): Call<Product>
 }
+

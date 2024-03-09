@@ -1,7 +1,8 @@
 package com.sneakersphere.sneakersphereapp
 
+
 data class Product(
-    val id: Int,
+    val id: String,
     val name: String,
     val price: String,
     val image: String,
@@ -11,3 +12,5 @@ data class Product(
     val sizes: List<String>,
     val relatedProductIds: List<String>
 )
+
+

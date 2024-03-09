@@ -1,4 +1,3 @@
-
 package com.sneakersphere.sneakersphereapp
 
 import android.view.LayoutInflater
@@ -59,3 +58,4 @@ class ProductAdapter(
         }
     }
 }
+
