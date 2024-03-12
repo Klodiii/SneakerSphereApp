@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 
 class ProductViewHolder(
     itemView: View,
@@ -17,7 +16,7 @@ class ProductViewHolder(
     fun bind(product: Product) {
         productNameTextView.text = product.name
         productPriceTextView.text = product.price
-        Glide.with(itemView.context).load(product.image).into(productImageView)
+        productImageView.setImageResource(product.imageResource)
 
         itemView.setOnClickListener {
             clickListener.onProductClick(product)

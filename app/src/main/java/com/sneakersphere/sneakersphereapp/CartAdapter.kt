@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -37,26 +36,19 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
         private val selectedSizeTextView: TextView = itemView.findViewById(R.id.selectedSizeTextView)
         private val productImageView: ImageView = itemView.findViewById(R.id.productImageView)
         private val removeItemButton: ImageView = itemView.findViewById(R.id.removeItemButton)
-        private val selectCheckBox: CheckBox = itemView.findViewById(R.id.selectCheckBox)
 
         fun bind(item: CartItem) {
             productNameTextView.text = item.name
+            // Convert the price to a string before setting it to the TextView
             productPriceTextView.text = String.format("%.2f", item.price)
-            selectedSizeTextView.text = "Size: ${item.size}"
+            selectedSizeTextView.text = "Size: ${item.size}" // Bind size information
             productImageView.setImageResource(item.imageResource)
-            selectCheckBox.isChecked = item.isSelected
-
-            selectCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
-                item.isSelected = isChecked
-                updateTotalAmount()
-            }
 
             removeItemButton.setOnClickListener {
+                // Show the confirmation dialog
                 showRemoveItemConfirmationDialog(item)
             }
-
         }
-
 
         private fun showRemoveItemConfirmationDialog(item: CartItem) {
             val dialogView = LayoutInflater.from(itemView.context).inflate(R.layout.remove_item, null)
@@ -69,10 +61,13 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
                 .create()
 
             confirmRemoveButton.setOnClickListener {
+                // Remove the item from the cart
                 ShoppingCart.removeItem(item)
-                updateTotalAmount()
+                // Update the UI to reflect the change in total amount
+                (itemView.context as CartActivity).updateTotalAmount()
+                // Update the cart items list in the adapter
                 cartItems = ShoppingCart.getItems()
-                notifyDataSetChanged()
+                notifyDataSetChanged() // Notify the adapter that the data set has changed
                 alertDialog.dismiss()
             }
 
@@ -81,10 +76,6 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
             }
 
             alertDialog.show()
-        }
-
-        private fun updateTotalAmount() {
-            (itemView.context as? CartActivity)?.updateTotalAmount()
         }
 
     }

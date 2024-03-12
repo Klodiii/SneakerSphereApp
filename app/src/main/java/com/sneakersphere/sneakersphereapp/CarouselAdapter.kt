@@ -1,4 +1,3 @@
-
 package com.sneakersphere.sneakersphereapp
 
 import android.view.LayoutInflater
@@ -6,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 
 class CarouselAdapter(private val itemList: List<Any>) :
     RecyclerView.Adapter<CarouselAdapter.CarouselViewHolder>() {
@@ -27,9 +25,7 @@ class CarouselAdapter(private val itemList: List<Any>) :
             }
             is Product -> {
                 // It's a Product object for the product list
-                Glide.with(holder.itemView.context)
-                    .load(item.image)
-                    .into(holder.imageView)
+                holder.imageView.setImageResource(item.imageResource)
             }
             else -> throw IllegalArgumentException("Unknown item type at position: $position")
         }

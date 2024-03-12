@@ -7,9 +7,6 @@ data class CartItem(
     val name: String,
     val price: Double,
     val size: String,
-    val imageResource: Int,
-    var isSelected: Boolean = false
-) : Serializable
-
-
+    val imageResource: Int) :
+    Serializable
 

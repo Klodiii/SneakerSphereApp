@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 
 class ProductAdapter(
     private var productList: List<Product>,
@@ -41,16 +40,14 @@ class ProductAdapter(
         itemView: View,
         private val clickListener: OnProductClickListener
     ) : RecyclerView.ViewHolder(itemView) {
-        private val productNameTextView: TextView = itemView.findViewById(R.id.productNameTextView)
-        private val productPriceTextView: TextView = itemView.findViewById(R.id.productPriceTextView)
-        private val productImageView: ImageView = itemView.findViewById(R.id.productImageView)
+        val productNameTextView: TextView = itemView.findViewById(R.id.productNameTextView)
+        val productPriceTextView: TextView = itemView.findViewById(R.id.productPriceTextView)
+        val productImageView: ImageView = itemView.findViewById(R.id.productImageView)
 
         fun bind(product: Product) {
             productNameTextView.text = product.name
             productPriceTextView.text = product.price
-            Glide.with(itemView.context)
-                .load(product.image)
-                .into(productImageView)
+            productImageView.setImageResource(product.imageResource)
 
             itemView.setOnClickListener {
                 clickListener.onProductClick(product)
@@ -58,4 +55,3 @@ class ProductAdapter(
         }
     }
 }
-
