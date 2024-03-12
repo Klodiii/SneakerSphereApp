@@ -19,9 +19,6 @@ object ShoppingCart {
         return items
     }
 
-    fun removeUncheckedItems() {
-        items.removeAll { !it.isSelected }
-    }
 
     fun getTotalPrice(): Double {
         var totalPrice = 0.0
